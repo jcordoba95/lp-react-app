@@ -1,25 +1,26 @@
-import logo from './logo.svg';
+import React from 'react';
 import './App.css';
+import { Router, Route, Switch, Redirect } from 'react-router-dom';
 
-function App() {
+import { history } from './helpers/history';
+import { Dashboard } from './components/Dashboard/index';
+import { Login } from './components/Login/index';
+import { Navbar } from './components/Navbar/Navbar';
+import { PrivateRoute } from './components/PrivateRoute';
+
+export function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="app-container bg-light">
+      <Router history={history}>
+        <Navbar />
+        <div className="container pt-4 pb-4">
+          <Switch>
+            <PrivateRoute exact path="/" component={Dashboard} />
+            <Route path="/login" component={Login} />
+            <Redirect from="*" to="/" />
+          </Switch>
+        </div>
+      </Router>
     </div>
-  );
+  )
 }
-
-export default App;
