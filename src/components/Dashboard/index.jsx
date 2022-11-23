@@ -1,7 +1,7 @@
 import { useRecoilValue } from 'recoil';
 
 import { authAtom } from '../../state/auth';
-import { RecordsTable } from '../RecordsTable/index';
+import { RecordsTable } from '../RecordsTable';
 
 export function Dashboard() {
   const auth = useRecoilValue(authAtom);

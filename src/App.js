@@ -3,9 +3,9 @@ import './App.css';
 import { Router, Route, Switch, Redirect } from 'react-router-dom';
 
 import { history } from './helpers/history';
-import { Dashboard } from './components/Dashboard/index';
-import { Login } from './components/Login/index';
-import { Navbar } from './components/Navbar/Navbar';
+import { Dashboard } from './components/Dashboard';
+import { Login } from './components/Login';
+import { Navbar } from './components/Navbar';
 import { PrivateRoute } from './components/PrivateRoute';
 
 export function App() {
