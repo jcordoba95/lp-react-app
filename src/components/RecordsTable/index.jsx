@@ -35,6 +35,7 @@ export function RecordsTable({ auth }) {
       setLoading(false);
     }
     getRecords();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [search, limit, page, sort]);
 
   function handleSortChange(event) {
@@ -62,6 +63,25 @@ export function RecordsTable({ auth }) {
     setSearch(searchValue);
   }
 
+  async function handleDeleteRecord(id) {
+    if(window.confirm(`Are you sure you want to delete record ID: ${id}? This action cannot be undone.`)) {
+      async function deleteRecord() {
+        setLoading(true);
+        await fetch(`${baseUrl}/v1/records/${id}`,
+        {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${auth.token}`,
+          },
+        });
+        setLoading(false);
+      }
+      deleteRecord();
+      window.location.reload(false);
+    }
+  }
+
   if (loading) return <div className="spinner-border spinner-border-sm"></div>;
 
   return (
@@ -80,7 +100,7 @@ export function RecordsTable({ auth }) {
             </select>
           </div>
           <div>
-            <p style={{ textAlign: "center" }}>Limit</p>
+            <p style={{ textAlign: "center" }}>Per Page</p>
             <select value={limit} className="form-select" aria-label="Default select example" onChange={handleLimitChange}>
               <option value="5">5</option>
               <option value="10">10</option>
@@ -92,16 +112,15 @@ export function RecordsTable({ auth }) {
           <div>
             <p style={{ textAlign: "center" }}>Page</p>
             <select value={page} className="form-select" aria-label="Default select example" onChange={handlePageChange}>
-              {[...Array(totalPages + 1)].map((_, i) => {
-                if (i === 0) return;
-                return <option key={i} value={i}>{i}</option>
-              })}
+              {[...Array(totalPages)].map((_, i) => (
+                <option key={i+1} value={i+1}>{i+1}</option>
+              ))}
             </select>
           </div>
           <div>
             <p style={{ textAlign: "center" }}>Search</p>
             <div style={{ display: "flex" }}>
-              <input className="form-control" id="search" aria-describedby="emailHelp" placeholder="Search..." onChange={handleSearchChange} value={searchValue}/>
+              <input className="form-control" id="search" placeholder="Search..." onChange={handleSearchChange} value={searchValue}/>
               <button type="submit" className="btn btn-primary" onClick={handleSearch}>Search</button>
             </div>
           </div>
@@ -125,7 +144,7 @@ export function RecordsTable({ auth }) {
                 <td className="center">{record.UserBalance}</td>
                 <td className="center">{record.OperationResponse}</td>
                 <td>{record.Date}</td>
-                <td><button className="btn btn-danger" onClick={() => console.log(`deleted: ${record.ID}`)}>Delete</button></td>
+                <td><button className="btn btn-danger" onClick={() => handleDeleteRecord(record.ID)}>Delete</button></td>
               </tr>
             ))}
 					</tbody>

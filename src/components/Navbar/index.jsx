@@ -14,7 +14,8 @@ export function Navbar() {
   return (
     <nav className="navbar navbar-expand navbar-dark bg-dark">
       <div className="navbar-nav">
-        <NavLink exact to="/" className="nav-item nav-link">Home</NavLink>
+        <NavLink exact to="/" className="nav-item nav-link">Dashboard</NavLink>
+        <NavLink exact to="/operation" className="nav-item nav-link">Operations</NavLink>
         <a onClick={userActions.logout} className="nav-item nav-link" href="/login">Logout</a>
       </div>
     </nav>

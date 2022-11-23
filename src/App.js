@@ -7,6 +7,7 @@ import { Dashboard } from './components/Dashboard';
 import { Login } from './components/Login';
 import { Navbar } from './components/Navbar';
 import { PrivateRoute } from './components/PrivateRoute';
+import { OperationForm } from './components/OperationForm';
 
 export function App() {
   return (
@@ -16,6 +17,7 @@ export function App() {
         <div className="container pt-4 pb-4">
           <Switch>
             <PrivateRoute exact path="/" component={Dashboard} />
+            <PrivateRoute exact path="/operation" component={OperationForm} />
             <Route path="/login" component={Login} />
             <Redirect from="*" to="/" />
           </Switch>
